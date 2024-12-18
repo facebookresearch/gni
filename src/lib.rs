@@ -2,6 +2,8 @@ use std::fs;
 use std::path::Path;
 use std::path::PathBuf;
 use anyhow::{anyhow, Context, Result};
+mod python;
+mod constants;
 
 use blake3::Hasher;
 use nvml_wrapper::Nvml;
@@ -14,9 +16,13 @@ fn blake3_hash_string(input: &str) -> String {
 }
 
 /// Returns the GPU Node ID as String
-pub fn get_gpu_node_id(cache_file_path: &PathBuf) -> Result<String, anyhow::Error> {
-    if Path::new(cache_file_path).exists() {
-        let contents: String = fs::read_to_string(cache_file_path).context("Failed to read cache file")?;
+pub fn get_gpu_node_id(cache_file_path: Option<&PathBuf>) -> Result<String, anyhow::Error> {
+    let default_path = Path::new(constants::DEFAULT_CACHE_FILEPATH);
+    let binding = default_path.to_path_buf();
+    let path = cache_file_path.unwrap_or(&binding);
+
+    if Path::new(path).exists() {
+        let contents: String = fs::read_to_string(path).context("Failed to read cache file")?;
         return Ok(contents);
     }
 
@@ -41,7 +47,7 @@ pub fn get_gpu_node_id(cache_file_path: &PathBuf) -> Result<String, anyhow::Erro
 
     let gpu_node_id: String = blake3_hash_string(&concatenated_uuids);
 
-    fs::write(cache_file_path, &gpu_node_id).context("Failed to write cache")?;
+    fs::write(path, &gpu_node_id).context("Failed to write cache")?;
 
     Ok(gpu_node_id)
 }
