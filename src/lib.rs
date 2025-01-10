@@ -2,11 +2,13 @@ use std::fs;
 use std::path::Path;
 use std::path::PathBuf;
 use anyhow::{anyhow, Context, Result};
-mod python;
 mod constants;
 
 use blake3::Hasher;
 use nvml_wrapper::Nvml;
+
+#[cfg(feature = "python")]
+mod python;
 
 fn blake3_hash_string(input: &str) -> String {
     let mut hasher: Hasher = Hasher::new();
@@ -17,9 +19,9 @@ fn blake3_hash_string(input: &str) -> String {
 
 /// Returns the GPU Node ID as String
 pub fn get_gpu_node_id(cache_file_path: Option<&PathBuf>) -> Result<String, anyhow::Error> {
-    let default_path = Path::new(constants::DEFAULT_CACHE_FILEPATH);
-    let binding = default_path.to_path_buf();
-    let path = cache_file_path.unwrap_or(&binding);
+    let default_path: &Path = Path::new(constants::DEFAULT_CACHE_FILEPATH);
+    let binding: PathBuf = default_path.to_path_buf();
+    let path: &PathBuf = cache_file_path.unwrap_or(&binding);
 
     if Path::new(path).exists() {
         let contents: String = fs::read_to_string(path).context("Failed to read cache file")?;
@@ -28,7 +30,7 @@ pub fn get_gpu_node_id(cache_file_path: Option<&PathBuf>) -> Result<String, anyh
 
     let nvml: Nvml = Nvml::init().context("Failed to init nvml")?;
     let device_count: u32 = nvml.device_count().context("Failed to get nvml device count")?;
-    let mut uuids = Vec::new();
+    let mut uuids: Vec<String> = Vec::new();
 
     for n in 0..device_count {
         let device: nvml_wrapper::Device<'_> = nvml.device_by_index(n).context("Failed to get nvml device by index")?;

@@ -15,6 +15,6 @@ fn get_gpu_node_id(cache_file_path: Option<String>) -> PyResult<String> {
 }
 
 #[pymodule]
-pub fn gni_py(m: &Bound<'_, PyModule>) -> PyResult<()> {
+pub fn gni_lib(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_gpu_node_id, m)?)
 }
