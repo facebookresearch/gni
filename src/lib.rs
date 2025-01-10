@@ -2,13 +2,17 @@ use std::fs;
 use std::path::Path;
 use std::path::PathBuf;
 use anyhow::{anyhow, Context, Result};
+
+#[cfg(feature = "cpp")]
+mod cpp;
+
+#[cfg(feature = "python")]
+mod python;
+
 mod constants;
 
 use blake3::Hasher;
 use nvml_wrapper::Nvml;
-
-#[cfg(feature = "python")]
-mod python;
 
 fn blake3_hash_string(input: &str) -> String {
     let mut hasher: Hasher = Hasher::new();

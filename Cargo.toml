@@ -2,11 +2,13 @@
 name = "gni"
 version = "0.1.0"
 edition = "2021"
+build = "src/build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
 name = "gni_lib"
-crate-type = ["cdylib"]
+# rlib required for c and cpp builds
+crate-type = ["cdylib", "rlib"]
 path = "src/lib.rs"
 
 [dependencies]
@@ -15,8 +17,13 @@ blake3 = "1.5.4"
 clap = { version = "4.5.19", features = ["derive"] }
 anyhow = "1.0.89"
 pyo3 = { version = "0.23.3", features = ["extension-module"], optional = true }
+cxx = { version = "1.0", optional = true }
+cc = { version = "1.0", optional = true }
 
+[build-dependencies]
+cxx-build = { version = "1.0", optional = true }
 
 [features]
 default = []
+cpp = ["cxx", "cxx-build", "cc"]
 python = ["pyo3"]
