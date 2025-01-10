@@ -16,15 +16,22 @@ override CPP_SRC  += target/cxxbridge/gni/src/cpp/mod.rs.cc
 override CPP_SRC  += src/cpp/GNI.cpp
 override CPP_SRC  += src/cpp/main.cpp
 
+override LDFLAGS  ?=
+override LDFLAGS  += -Ltarget/$(BUILD_MODE) -lgni_lib
+
 override CPP_LDFLAGS  ?= $(LDFLAGS)
 # libcxxbridge1 contains cpp implementations for rust code that are required when compiling rust projects
 # see: https://github.com/dtolnay/cxx/issues/875#issuecomment-913104697
 CXX_HASH_DIR = $(shell find target/$(BUILD_MODE)/build/ -name "libcxxbridge1.a" -exec dirname {} \;)
 override CPP_LDFLAGS  += -L${CXX_HASH_DIR} -l:libcxxbridge1.a
 
-.PHONY: all build_cpp compile_cpp run_cpp clean
+override C_SRC  ?=
+override C_SRC  += src/c/GNI.c
+override C_SRC  += src/c/main.c
 
-all: compile_cpp
+.PHONY: all build_cpp compile_cpp run_cpp build_c compile_c run_c clean
+
+all: compile_cpp compile_c
 
 # ------------------------------------------------------------
 # C++ Targets
@@ -35,6 +42,7 @@ build_cpp:
 
 compile_cpp: build_cpp
 	g++ \
+
     ${CPP_FLAGS} \
     ${CPP_SRC} \
     ${CPP_LDFLAGS} \
@@ -43,6 +51,23 @@ compile_cpp: build_cpp
 run_cpp: compile_cpp
 	LD_LIBRARY_PATH=./target/$(BUILD_MODE):$$LD_LIBRARY_PATH ./main_cpp
 
+# ------------------------------------------------------------
+# C Targets
+# ------------------------------------------------------------
+
+build_c:
+	cargo build --features "c" $(CARGO_FLAG)
+
+compile_c: build_c
+	gcc \
+    ${C_SRC} \
+    ${LDFLAGS} \
+    -o main_c
+
+run_c: compile_c
+	LD_LIBRARY_PATH=./target/$(BUILD_MODE):$$LD_LIBRARY_PATH ./main_c
+
 clean:
-	rm -f main
+	rm -f main_c
+	rm -f main_cpp
 	cargo clean

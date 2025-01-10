@@ -3,6 +3,9 @@ use std::path::Path;
 use std::path::PathBuf;
 use anyhow::{anyhow, Context, Result};
 
+#[cfg(feature = "c")]
+mod c;
+
 #[cfg(feature = "cpp")]
 mod cpp;
 
@@ -14,7 +17,7 @@ mod constants;
 use blake3::Hasher;
 use nvml_wrapper::Nvml;
 
-fn blake3_hash_string(input: &str) -> String {
+fn blake3_hash_string(input: &str) -> String { 
     let mut hasher: Hasher = Hasher::new();
     hasher.update(input.as_bytes());
     let result: blake3::Hash = hasher.finalize();
