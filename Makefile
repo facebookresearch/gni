@@ -29,9 +29,9 @@ override C_SRC  ?=
 override C_SRC  += src/c/GNI.c
 override C_SRC  += src/c/main.c
 
-.PHONY: all build_cpp compile_cpp run_cpp build_c compile_c run_c clean
+.PHONY: all build_cpp compile_cpp run_cpp build_c compile_c run_c build_go run_go clean
 
-all: compile_cpp compile_c
+all: compile_cpp compile_c build_go
 
 # ------------------------------------------------------------
 # C++ Targets
@@ -66,6 +66,17 @@ compile_c: build_c
 
 run_c: compile_c
 	LD_LIBRARY_PATH=./target/$(BUILD_MODE):$$LD_LIBRARY_PATH ./main_c
+
+# ------------------------------------------------------------
+# Go Targets
+# ------------------------------------------------------------
+
+build_go: build_c
+	cd src/c && make
+	cd src/go && go build
+
+run_go: build_go
+	LD_LIBRARY_PATH=./target/$(BUILD_MODE):$$LD_LIBRARY_PATH ./src/go/go
 
 clean:
 	rm -f main_c
