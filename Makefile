@@ -42,7 +42,6 @@ build_cpp:
 
 compile_cpp: build_cpp
 	g++ \
-
     ${CPP_FLAGS} \
     ${CPP_SRC} \
     ${CPP_LDFLAGS} \
@@ -81,4 +80,5 @@ run_go: build_go
 clean:
 	rm -f main_c
 	rm -f main_cpp
+	cd src/go && go clean
 	cargo clean

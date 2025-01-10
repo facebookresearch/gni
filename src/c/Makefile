@@ -1,5 +1,7 @@
 
-all: libGNI.a clean
+.PHONY: all libGNI.a clean
+
+all: libGNI.a
 
 libGNI.a: GNI.o
 	ar rcs $@ $^
