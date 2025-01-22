@@ -81,4 +81,5 @@ clean:
 	rm -f main_c
 	rm -f main_cpp
 	cd src/go && go clean
+	cd src/c && make clean
 	cargo clean

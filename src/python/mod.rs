@@ -1,4 +1,3 @@
-	
 use std::path::PathBuf;
 
 use pyo3::prelude::*;
@@ -11,7 +10,7 @@ fn get_gpu_node_id(cache_file_path: Option<String>) -> PyResult<String> {
     let optional_path_ref: Option<&PathBuf> = optional_path.as_ref();
 
     crate::get_gpu_node_id(optional_path_ref)
-        .map_err(|err | pyo3::exceptions::PyRuntimeError::new_err(err.to_string()))
+        .map_err(|err| pyo3::exceptions::PyRuntimeError::new_err(err.to_string()))
 }
 
 #[pymodule]

@@ -10,8 +10,8 @@ pub extern "C" fn rust_get_gpu_node_id() -> *mut c_char {
         Ok(c_str) => c_str,
         Err(_) => return std::ptr::null_mut(),
     };
- 
-    // Consumes the CString and transfers pointer ownership to the caller. 
+
+    // Consumes the CString and transfers pointer ownership to the caller.
     // Not calling CString::from_raw will lead to a memory leak. See rust_free_ptr below.
     // source: https://doc.rust-lang.org/std/ffi/struct.CString.html#method.into_raw
     c_string.into_raw()

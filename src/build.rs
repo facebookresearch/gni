@@ -1,4 +1,3 @@
-
 fn main() {
     if std::env::var("CARGO_FEATURE_CPP").is_ok() {
         // C++ build

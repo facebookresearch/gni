@@ -1,6 +1,6 @@
+use anyhow::Context;
 use clap::Parser;
 use std::path::PathBuf;
-use anyhow::Context;
 mod constants;
 
 #[derive(Parser)]
@@ -18,7 +18,8 @@ struct Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
-    let gpu_node_id = gni_lib::get_gpu_node_id(Some(&args.cache_filepath)).context("Failed to get id")?;
+    let gpu_node_id =
+        gni_lib::get_gpu_node_id(Some(&args.cache_filepath)).context("Failed to get id")?;
 
     if args.stdout {
         println!("{}", gpu_node_id);
