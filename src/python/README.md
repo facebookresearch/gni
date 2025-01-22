@@ -1,4 +1,4 @@
-# gni - Python pkg
+# GNI - Python pkg
 
 GNI uses [pyo3](https://pyo3.rs/main/getting-started.html?#installation) to
 write a native python library, and

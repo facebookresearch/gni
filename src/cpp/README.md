@@ -1,4 +1,4 @@
-# gni - cpp
+# GNI - cpp
 
 We're using [cxx](https://cxx.rs/#cxx--safe-interop-between-rust-and-c) to
 expose cpp bindings.

@@ -1,4 +1,4 @@
-# gni - go
+# GNI - go
 
 GNI for Go uses a C library via cgo to bridge Rust functionality into Go.
 
