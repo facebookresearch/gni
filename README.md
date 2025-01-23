@@ -43,7 +43,7 @@ GNI offers the same core functionality for each supported language, provides bin
 
 > Note: If you’d like support for another language, please open an issue or submit a pull request!
 
-### Contributing
+## Contributing
 
 Read our contributing guide to learn about our development process, how to propose bugfixes and feature requests, and how to build your changes.
 

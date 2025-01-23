@@ -5,7 +5,21 @@ write a native python library, and
 [maturin](https://pyo3.rs/main/getting-started.html?#building) is the
 recommended build tool.
 
-## Building
+## Install from pypi
+
+```
+$ pip install gni
+```
+
+Running the library:
+```
+$ python
+>>> import gni_lib
+>>> gni_lib.get_gpu_node_id()
+<id>
+```
+
+## Building from source
 
 1. Install maturin (see
    [maturin installation guide](https://www.maturin.rs/installation))
@@ -21,7 +35,7 @@ recommended build tool.
 
 > You can view the built wheels in the target/wheels directory
 
-## Installation
+## Installing from source
 
 1. Builds the crate and installs it in the current env
 
