@@ -77,7 +77,7 @@ jobs:
         run: |
           make compile_cpp
 
-  run-go:
+  build-go:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -88,7 +88,7 @@ jobs:
         run: |
           make build_go
 
-  run-python:
+  build-python:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
