@@ -99,14 +99,20 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Maturin
+      - name: Install Build dependencies
         run: |
           python -m venv ~/.cache/venv-ci
           source ~/.cache/venv-ci/bin/activate
           pip install maturin
+          pip install build
 
       # running python wheel requires nvidia GPU drivers, these are not available on github CI
       - name: Build and Install Python Crate
         run: |
           source ~/.cache/venv-ci/bin/activate
           maturin develop --features python
+
+      - name: Build Distribution Files
+        run: |
+          source ~/.cache/venv-ci/bin/activate
+          python -m build

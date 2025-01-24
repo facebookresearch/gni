@@ -5,12 +5,15 @@
 # LICENSE file in the root directory of this source tree.
 
 [build-system]
-requires = ["maturin>=1.0"]
+requires = [
+  "maturin>=1.0", 
+  "cffi",
+]
 build-backend = "maturin"
 
 [project]
 name = "gni"
-version = "0.1.1"
+version = "0.1.2"
 readme = "src/python/README.md"
 description = "Library to get a GPU Node ID"
 requires-python = ">=3.10"
