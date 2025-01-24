@@ -22,3 +22,7 @@ authors = [
 maintainers = [
   {name = "Lucca Bertoncini", email = "luccab@meta.com"}
 ]
+
+[project.urls]
+Homepage = "https://github.com/facebookresearch/gni"
+Issues = "https://github.com/facebookresearch/gni/issues"
