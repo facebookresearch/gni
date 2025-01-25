@@ -16,7 +16,7 @@ name = "gni"
 version = "0.1.2"
 dependencies = ["cffi"]
 readme = "src/python/README.md"
-description = "Library to get a GPU Node ID"
+description = "Library to create a GPU Node ID"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
 authors = [
