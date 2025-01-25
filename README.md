@@ -10,7 +10,7 @@ GNI offers the same core functionality for each supported language, provides bin
 - [cpp](/src/cpp/README.md)
 - [go](/src/go/README.md)
 - [python](/src/python/README.md)
-- [rust](./README.md): see below
+- [rust](./README.md#rust-library) see below
 
 > Note: If you’d like support for another language, please open an issue or submit a pull request!
 
@@ -19,14 +19,16 @@ GNI offers the same core functionality for each supported language, provides bin
 GNI is available on [crates.io](), you should be able to call it from your Rust code:
 ```
   let result = gni_lib::get_gpu_node_id(None);
-  println!("Result: {:?}", result);
+  println!("GPU Node ID: {:?}", result);
+  # stdout: GPU Node ID: Ok(<id>)
 ```
 
-Cargo.toml
 ```
+# Don't forget to add as a dependency on Cargo.toml
 ...
 [dependencies]
 gni = "0.1.0"
+...
 ```
 
 ## Rust Build and Running GNI from source
