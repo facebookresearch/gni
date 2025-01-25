@@ -16,7 +16,7 @@ GNI offers the same core functionality for each supported language, provides bin
 
 ## Rust Library
 
-GNI is available on [crates.io](), you should be able to call it from your Rust code:
+GNI is available on [crates.io](https://crates.io/crates/gni), you should be able to call it from your Rust code:
 ```
   let result = gni_lib::get_gpu_node_id(None);
   println!("GPU Node ID: {:?}", result);
