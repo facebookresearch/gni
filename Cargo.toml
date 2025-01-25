@@ -6,6 +6,7 @@
 
 [package]
 name = "gni"
+description = "Library to create a GPU Node ID"
 version = "0.1.0"
 edition = "2021"
 build = "src/build.rs"
