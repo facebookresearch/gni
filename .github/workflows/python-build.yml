@@ -15,23 +15,24 @@ jobs:
           - quay.io/pypa/manylinux_2_28_x86_64
     container: ${{ matrix.container }}
 
-    - name: Github Checkout
-      uses: actions/checkout@v4
+    steps:
+      - name: Github Checkout
+        uses: actions/checkout@v4
 
-    - name: Python Setup
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.10
-        architecture: x64
+      - name: Python Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+          architecture: x64
 
-    - name: Build wheels
-      uses: PyO3/maturin-action@v1
-      with:
-        target: ${{ matrix.target }}
-        manylinux: auto
-        args: --release --features=python --out dist -m Cargo.toml
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          manylinux: auto
+          args: --release --features=python --out dist -m Cargo.toml
 
-    - name: Upload wheels
+      - name: Upload wheels
       uses: actions/upload-artifact@v3
       with:
         name: wheels
