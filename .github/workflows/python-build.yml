@@ -10,10 +10,11 @@ jobs:
     strategy:
       matrix:
         container:
-          - quay.io/pypa/manylinux2014_x86_64
-          - quay.io/pypa/manylinux_2_24_x86_64
-          - quay.io/pypa/manylinux_2_28_x86_64
-    container: ${{ matrix.container }}
+          - manylinux2014_x86_64
+          - manylinux_2_24_x86_64
+          - manylinux_2_28_x86_64
+        target: [x86_64, i686]
+    container: quay.io/pypa/${{ matrix.container }}
 
     steps:
       - name: Github Checkout
@@ -33,9 +34,9 @@ jobs:
           args: --release --features=python --out dist -m Cargo.toml
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels_${{ matrix.container }}_${{ matrix.target }}
           path: dist
   
   release:
