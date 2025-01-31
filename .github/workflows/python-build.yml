@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        container:
+        manylinux:
           - manylinux2014
           - manylinux_2_28
         target: [x86_64, aarch64, ppc64le, s390x]
-    container: quay.io/pypa/${{ matrix.container }}_${{ matrix.target }}
+    # container: quay.io/pypa/${{ matrix.container }}_${{ matrix.target }}
 
     steps:
       - name: Github Checkout
@@ -29,13 +29,13 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          manylinux: auto
+          manylinux: ${{ matrix.manylinux }}
           args: --release --features=python --out dist -m Cargo.toml
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: wheels_${{ matrix.container }}_${{ matrix.target }}
+          name: wheels_${{ matrix.manylinux }}_${{ matrix.target }}
           path: dist
   
   release:
