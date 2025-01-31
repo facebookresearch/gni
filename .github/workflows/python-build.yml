@@ -33,10 +33,10 @@ jobs:
           args: --release --features=python --out dist -m Cargo.toml
 
       - name: Upload wheels
-      uses: actions/upload-artifact@v3
-      with:
-        name: wheels
-        path: dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: dist
   
   release:
     name: Release
