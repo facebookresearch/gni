@@ -45,7 +45,7 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: wheels
+          path: wheels
 
       - name: Python Setup
         uses: actions/setup-python@v4
@@ -54,10 +54,3 @@ jobs:
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
-      # - name: Publish to PyPI
-      #   env:
-      #     TWINE_USERNAME: __token__
-      #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      #   run: |
-      #     pip install --upgrade twine
-      #     twine upload --skip-existing *
