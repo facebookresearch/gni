@@ -1,4 +1,4 @@
-name: Python Wheel on Multiple manylinux Containers
+name: Build Python Wheels
 
 on:
   push:
@@ -13,7 +13,6 @@ jobs:
           - manylinux2014
           - manylinux_2_28
         target: [x86_64, aarch64, ppc64le, s390x]
-    # container: quay.io/pypa/${{ matrix.container }}_${{ matrix.target }}
 
     steps:
       - name: Github Checkout
@@ -40,11 +39,11 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    # if: startsWith(github.ref, 'refs/tags/')
     needs: [ linux-build ]
     steps:
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: wheels
 
@@ -53,10 +52,12 @@ jobs:
         with:
           python-version: 3.10
 
-      - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          pip install --upgrade twine
-          twine upload --skip-existing *
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      # - name: Publish to PyPI
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      #   run: |
+      #     pip install --upgrade twine
+      #     twine upload --skip-existing *
