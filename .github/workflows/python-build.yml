@@ -10,11 +10,10 @@ jobs:
     strategy:
       matrix:
         container:
-          - manylinux2014_x86_64
-          - manylinux_2_24_x86_64
-          - manylinux_2_28_x86_64
-        target: [x86_64, i686]
-    container: quay.io/pypa/${{ matrix.container }}
+          - manylinux2014
+          - manylinux_2_28
+        target: [x86_64, aarch64, ppc64le, s390x]
+    container: quay.io/pypa/${{ matrix.container }}_${{ matrix.target }}
 
     steps:
       - name: Github Checkout
