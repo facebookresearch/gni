@@ -39,7 +39,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    # if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
     needs: [ linux-build ]
     steps:
       - name: Download Build Artifacts
@@ -52,5 +52,10 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          pip install --upgrade twine
+          twine upload --skip-existing wheels/**/*.whl
