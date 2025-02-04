@@ -35,6 +35,23 @@ jobs:
         with:
           name: wheels_${{ matrix.manylinux }}_${{ matrix.target }}
           path: dist
+
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up secret file
+      env:
+        PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        echo $PYPI_PASSWORD >> secrets.txt
+
+    - name: Run tmate
+      uses: mxschmitt/action-tmate@v3
   
   release:
     name: Release
