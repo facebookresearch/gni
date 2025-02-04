@@ -39,6 +39,7 @@ jobs:
   debug:
     name: Debug
     runs-on: ubuntu-latest
+    environment: pypi-publish
 
     steps:
     - name: Check out code
