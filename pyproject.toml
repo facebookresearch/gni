@@ -13,7 +13,6 @@ build-backend = "maturin"
 
 [project]
 name = "gni"
-version = "0.1.3"
 dependencies = ["cffi"]
 readme = "src/python/README.md"
 description = "Library to create a GPU Node ID"
