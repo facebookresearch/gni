@@ -1,11 +1,11 @@
-name: Build and Publish
+name: Python Build and Publish
 
 on:
   push:
   pull_request:
 
 jobs:
-  linux-build:
+  build-wheels:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,48 +35,53 @@ jobs:
         with:
           name: wheels_${{ matrix.manylinux }}_${{ matrix.target }}
           path: dist
+
+  build-sdist:
+    name: Build Source Distribution (sdist)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Maturin
+        run: pip install --upgrade maturin
+
+      - name: Build sdist
+        run: maturin sdist --out dist
+
+      - name: Upload sdist Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist
   
   pypi-release:
     name: Publish to Pypi
     runs-on: ubuntu-latest
     environment: pypi-publish
-    if: startsWith(github.ref, 'refs/tags/')
-    needs: [ linux-build ]
+    # if: startsWith(github.ref, 'refs/tags/')
+    needs: [ build-wheels, build-sdist]
     steps:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          path: wheels
+          path: dist
 
       - name: Python Setup
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      
 
-      - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          pip install --upgrade twine
-          twine upload --skip-existing wheels/**/*.whl
-
-  cratesio-release:
-    name: Publish to Crates.io
-    runs-on: ubuntu-latest
-    environment: cratesio-publish
-    if: startsWith(github.ref, 'refs/tags/')
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - name: Publish to crates.io
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish
+      # - name: Publish to PyPI
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      #   run: |
+      #     pip install --upgrade twine
+      #     twine upload --skip-existing dist/**/*.whl dist/**/*.tar.gz
