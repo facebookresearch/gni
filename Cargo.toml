@@ -31,7 +31,7 @@ anyhow = "1.0.89"
 # see: https://pyo3.rs/v0.13.2/building_and_distribution.html#py_limited_apiabi3
 pyo3 = { version = "0.23.4", features = ["extension-module", "abi3-py38"], optional = true }
 cxx = { version = "1.0", optional = true }
-cc = { version = "1.0", optional = true }
+cc = { version = "1.2", optional = true }
 
 [build-dependencies]
 cxx-build = { version = "1.0", optional = true }
