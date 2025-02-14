@@ -8,7 +8,7 @@ package main
 
 import (
 	"fmt"
-	gni "github.com/facebookresearch/gni/go"
+	gni "github.com/facebookresearch/gni/src/go"
 )
 
 func main() {
