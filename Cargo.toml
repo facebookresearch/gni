@@ -26,7 +26,7 @@ path = "src/lib.rs"
 nvml-wrapper = "0.10.0"
 blake3 = "1.6.0"
 clap = { version = "4.5.30", features = ["derive"] }
-anyhow = "1.0.96"
+anyhow = "1.0.97"
 # 'abi3' feature enables Python modules to be used against multiple Python versions
 # see: https://pyo3.rs/v0.13.2/building_and_distribution.html#py_limited_apiabi3
 pyo3 = { version = "0.23.4", features = ["extension-module", "abi3-py38"], optional = true }
