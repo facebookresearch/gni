@@ -24,7 +24,7 @@ path = "src/lib.rs"
 
 [dependencies]
 nvml-wrapper = "0.10.0"
-blake3 = "1.8.0"
+blake3 = "1.8.1"
 clap = { version = "4.5.35", features = ["derive"] }
 anyhow = "1.0.97"
 # 'abi3' feature enables Python modules to be used against multiple Python versions
