@@ -7,7 +7,7 @@
 use std::ffi::CString;
 use std::os::raw::c_char;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn rust_get_gpu_node_id() -> *mut c_char {
     let message: String = crate::get_gpu_node_id(None).unwrap();
 
@@ -23,7 +23,7 @@ pub extern "C" fn rust_get_gpu_node_id() -> *mut c_char {
     c_string.into_raw()
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn rust_free_ptr(ptr: *mut c_char) {
     if ptr.is_null() {
         return;
