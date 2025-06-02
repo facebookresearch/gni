@@ -23,7 +23,7 @@ crate-type = ["cdylib", "rlib"]
 path = "src/lib.rs"
 
 [dependencies]
-nvml-wrapper = "0.10.0"
+nvml-wrapper = "0.11.0"
 blake3 = "1.8.2"
 clap = { version = "4.5.38", features = ["derive"] }
 anyhow = "1.0.98"
