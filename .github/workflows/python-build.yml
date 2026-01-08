@@ -9,10 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        manylinux:
-          - manylinux2014
-          - manylinux_2_28
-        target: [x86_64, aarch64, ppc64le, s390x]
+        target: [x86_64, aarch64]
 
     steps:
       - name: Github Checkout
@@ -27,8 +24,8 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          manylinux: ${{ matrix.manylinux }}
-          args: --release --features=python --out dist -m Cargo.toml
+          manylinux: auto
+          args: --release --features=python --out dist -m Cargo.toml -i python3.10 python3.11 python3.12 python3.13 python3.14 python3.14t
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4

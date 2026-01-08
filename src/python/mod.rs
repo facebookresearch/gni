@@ -19,7 +19,7 @@ fn get_gpu_node_id(cache_file_path: Option<String>) -> PyResult<String> {
         .map_err(|err| pyo3::exceptions::PyRuntimeError::new_err(err.to_string()))
 }
 
-#[pymodule]
+#[pymodule(gil_used = false)]
 pub fn gni_lib(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_gpu_node_id, m)?)
 }
