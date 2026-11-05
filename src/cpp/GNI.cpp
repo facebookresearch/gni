@@ -4,7 +4,11 @@
 // This source code is licensed under the license found in the
 // LICENSE file in the root directory of this source tree.
 
+#if __has_include("mod.rs.h")
 #include "mod.rs.h"
+#else
+#include "fair_infra/gni/mod.rs.h"
+#endif
 #include "GNI.h"
 
 std::string cpp_get_gpu_node_id() noexcept {
